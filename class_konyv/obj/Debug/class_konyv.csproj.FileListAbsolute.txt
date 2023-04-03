@@ -6,3 +6,11 @@ C:\Users\Tanulo\Desktop\skolwork\c# stuff\ora17\class_konyv\obj\Debug\class_kony
 C:\Users\Tanulo\Desktop\skolwork\c# stuff\ora17\class_konyv\obj\Debug\class_konyv.csproj.CoreCompileInputs.cache
 C:\Users\Tanulo\Desktop\skolwork\c# stuff\ora17\class_konyv\obj\Debug\class_konyv.exe
 C:\Users\Tanulo\Desktop\skolwork\c# stuff\ora17\class_konyv\obj\Debug\class_konyv.pdb
+C:\Users\Tanulo\Desktop\ora17\konyv\class_konyv\bin\Debug\class_konyv.exe.config
+C:\Users\Tanulo\Desktop\ora17\konyv\class_konyv\bin\Debug\class_konyv.exe
+C:\Users\Tanulo\Desktop\ora17\konyv\class_konyv\bin\Debug\class_konyv.pdb
+C:\Users\Tanulo\Desktop\ora17\konyv\class_konyv\obj\Debug\class_konyv.csproj.AssemblyReference.cache
+C:\Users\Tanulo\Desktop\ora17\konyv\class_konyv\obj\Debug\class_konyv.csproj.SuggestedBindingRedirects.cache
+C:\Users\Tanulo\Desktop\ora17\konyv\class_konyv\obj\Debug\class_konyv.csproj.CoreCompileInputs.cache
+C:\Users\Tanulo\Desktop\ora17\konyv\class_konyv\obj\Debug\class_konyv.exe
+C:\Users\Tanulo\Desktop\ora17\konyv\class_konyv\obj\Debug\class_konyv.pdb

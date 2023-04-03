@@ -12,13 +12,13 @@ namespace class_konyv
     internal class Konyv
     {
         string ISBN;
-        List<string> Szerzok;
+        string Szerzok;
         string Cim;
         int Kiadas;
         string Nyelv;
         bool Enciklopedia;
         char Ebook;
-
+        public List<Exception> exceptions = new List<Exception>();
         public string isbn
         {
             get { return ISBN; }
@@ -28,7 +28,7 @@ namespace class_konyv
                 {
                     //type 1
                     int num = 0;
-                    int index = 0;
+                    /*int index = 0;
                     for (int i = 10; i > 1; i--)
                     {
                         Console.WriteLine(i+"*"+ value[index]);
@@ -60,9 +60,9 @@ namespace class_konyv
                     else
                     {
                         throw new ISBNInvalidException(value);
-                    }
+                    }*/
                     //type 2
-                    /*num = 0;
+                    num = 0;
                     for (int i = 1; i < 10; i++)
                     {
                         num += int.Parse(value[i-1].ToString())*i;
@@ -74,8 +74,9 @@ namespace class_konyv
                     }
                     else
                     {
-                        throw new ISBNInvalidException(value);
-                    }*/
+                        exceptions.Add(new ISBNInvalidException(value));
+                        //throw new ISBNInvalidException(value);
+                    }
                 }
                 if (value.Length == 13)
                 {
@@ -109,35 +110,83 @@ namespace class_konyv
                     }
                     else
                     {
-                        throw new ISBNInvalidException(value);
+                        exceptions.Add(new ISBNInvalidException(value));
+                        //throw new ISBNInvalidException(value);
                     }
 
                 }
-                throw new ISBNLengthException(value);
+                exceptions.Add(new ISBNLengthException(value));
+                //throw new ISBNLengthException(value);
             }
         }
 
-        public List<string> szerzok
+        public string szerzok
         {
             get { return Szerzok; }
-            set { Szerzok = value; }
+            set
+            {
+                char[] chars = { ' ' };
+                int trueLen = value.Trim(chars).Length;
+                if (trueLen < 6)
+                {
+                    exceptions.Add(new InvalidWriterException(trueLen));
+                    //throw new InvalidWriterException(trueLen);
+                }
+                else
+                {
+                    Szerzok = value;
+                }
+            }
         }
 
         public string cim
         {
             get { return Cim; }
-            set { Cim = value; }
+            set
+            {
+                char[] chars = { ' ' };
+                if (value.Trim(chars).Length < 2)
+                {
+                    exceptions.Add(new InvalidTitleException());
+                    //throw new InvalidTitleException();
+                }
+                else
+                {
+                    Cim = value;
+                }
+            }
         }
 
         public int kiadas
         {
             get { return Kiadas; }
-            set { Kiadas = value; }
+            set {
+                if (value<-10000 || value>2023)
+                {
+                    exceptions.Add(new InvalidReleaseException(value));
+                    //throw new InvalidReleaseException(value);
+                }
+                else {
+                    Kiadas = value;
+                }
+                
+            }
         }
         public string nyelv
         {
             get { return Nyelv; }
-            set { Nyelv = value; }
+            set {
+                char[] chars = { ' ' };
+                if (value.Trim(chars).Length < 1)
+                {
+                    exceptions.Add(new InvalidLangException());
+                    //throw new InvalidLangException();
+                }
+                else
+                {
+                    Nyelv = value;
+                }
+            }
         }
         public bool enciklopedia
         {
@@ -158,15 +207,15 @@ namespace class_konyv
         {
             Console.WriteLine("dest xd");
         }
-        public Konyv(string iSBN, List<string> szerzok, string cim, int kiadas, string nyelv, bool enciklopedia, char ebook)
+        public Konyv(string iSBN, string  szerzok, string cim, int kiadas, string nyelv, bool enciklopedia, char ebook)
         {
-            ISBN = iSBN;
-            Szerzok = szerzok;
-            Cim = cim;
-            Kiadas = kiadas;
-            Nyelv = nyelv;
-            Enciklopedia = enciklopedia;
-            Ebook = ebook;
+            isbn = iSBN;
+            this.szerzok = szerzok;
+            this.cim = cim;
+            this.kiadas = kiadas;
+            this.nyelv= nyelv;
+            this.enciklopedia = enciklopedia;
+            this.ebook = ebook;
         }
     }
 }

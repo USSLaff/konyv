@@ -1,4 +1,5 @@
 ﻿using class_konyv.exceptions;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,41 +12,61 @@ namespace class_konyv
     {
         static void Main(string[] args)
         {
+            konyvespolc polc1= new konyvespolc();
+            //példa helyes input: 0837868564|szerző1|cím1|2023|Magyar|false|n
             while (true)
             {
+
+
                 try
                 {
-                    Console.Write("Adja meg a könyv ISBN kódját: ");
-                    Konyv xd = new Konyv();
-                    //xd.isbn = "9789635683659";
-                    string input = Console.ReadLine();
-                    if (!long.TryParse(input, out long temp))
+                    string[] input = Console.ReadLine().Split('|');
+                    if (input.Length!=7)
                     {
-                        throw new FormatException("Helytelen formátum; csak számokat tartalmazhat!");
+                        Console.WriteLine("Nem megfelelő mennyiségű paraméterek!");
+                        continue;
                     }
-                    string formatted = "";
-                    foreach (var item in input.Split('-'))
+                    int year;
+                    if (!int.TryParse(input[3], out year))
                     {
-                        formatted += item;
+                        Console.WriteLine("Évszám helytelen formátum!");
+                        continue;
                     }
-                    xd.isbn = formatted;
+                    bool enc;
+                    if (!bool.TryParse(input[5], out enc))
+                    {
+                        Console.WriteLine("Enciklopédia helytelen formátum!");
+                        continue;
+                    }
+                    char ebook;
+                    if (char.TryParse(input[6], out ebook))
+                    {
+                        if (!(ebook.Equals('n') || ebook.Equals('i')))
+                        {
+                            Console.WriteLine("E-book helytelen formátum!");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("E-book helytelen formátum!");
+                    }
+                    Konyv konyv1 = new Konyv(input[0], input[1], input[2], year, input[5], enc, ebook);
 
-                    Console.WriteLine($"ISBN kód helyes: {xd.isbn}");
+                    if (konyv1.exceptions.Count>0)
+                    {
+                        throw new AggregateException(konyv1.exceptions);
+                    }
+                    polc1.KonyvHozzaadas(konyv1);
+                    
                 }
-                catch (ISBNLengthException e)
+                catch (AggregateException e)
                 {
-                    Console.WriteLine(e.Message);
-                    break;
+                    foreach (Exception item in e.InnerExceptions)
+                    {
+                        Console.WriteLine(item.Message);
+                    }
                 }
-                catch (ISBNInvalidException e)
-                {
-                    Console.WriteLine(e.Message);
-                    break;
-                }catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    break;
-                }
+                Console.WriteLine($"Könyvek száma a polcon: {polc1.konyvekSzama}");
             }
             Console.ReadKey();
         }
