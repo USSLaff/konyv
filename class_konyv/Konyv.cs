@@ -157,20 +157,29 @@ namespace class_konyv
             }
         }
 
-        public int kiadas
+        public string kiadas
         {
-            get { return Kiadas; }
             set {
-                if (value<-10000 || value>2023)
+                int temp;
+                if (!int.TryParse(value,out temp))
                 {
-                    exceptions.Add(new InvalidReleaseException(value));
-                    //throw new InvalidReleaseException(value);
+                    exceptions.Add(new FormatException(value));
+                    return;
                 }
-                else {
-                    Kiadas = value;
+                if (temp < -10000 || temp > 2023)
+                {
+                    exceptions.Add(new InvalidReleaseException(temp));
+                    return;
+                }
+                {
+                    Kiadas = temp;
                 }
                 
             }
+        }
+        public int kiadasGet
+        {
+            get { return Kiadas; }
         }
         public string nyelv
         {
@@ -188,15 +197,40 @@ namespace class_konyv
                 }
             }
         }
-        public bool enciklopedia
+        public string enciklopedia
+        {
+            set {
+                bool temp;
+                if (!bool.TryParse(value, out temp))
+                {
+                    exceptions.Add(new InvalidEncException());
+                    return;
+                }
+                Enciklopedia= temp;
+            }
+        }
+        public bool enciklopedaget
         {
             get { return Enciklopedia; }
-            set { Enciklopedia = value; }
         }
-        public char ebook
+        public string ebook
+        {
+            set { 
+                char temp;
+                if (char.TryParse(value, out temp))
+                {
+                    if (!(temp.Equals('n') || temp.Equals('i')))
+                    {
+                        exceptions.Add(new InvalidEbookFormatException());
+                        return;
+                    }
+                }
+                Ebook = temp;
+            }
+        }
+        public char ebookGet
         {
             get { return Ebook; }
-            set { Ebook = value; }
         }
 
         public Konyv()
@@ -207,7 +241,7 @@ namespace class_konyv
         {
             Console.WriteLine("dest xd");
         }
-        public Konyv(string iSBN, string  szerzok, string cim, int kiadas, string nyelv, bool enciklopedia, char ebook)
+        public Konyv(string iSBN, string  szerzok, string cim, string kiadas, string nyelv, string enciklopedia, string ebook)
         {
             isbn = iSBN;
             this.szerzok = szerzok;

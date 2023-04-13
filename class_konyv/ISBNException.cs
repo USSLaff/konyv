@@ -23,7 +23,7 @@ namespace class_konyv.exceptions
         public override string Message => $"Nem megfelelő hossz (10/13): {length}";
 
     }
-    public class ISBNInvalidException :Exception
+    public class ISBNInvalidException : Exception
     {
 
         string code;
@@ -83,5 +83,14 @@ namespace class_konyv.exceptions
         }
 
         public override string Message => $"Nem megfelelő kiadási év ({year})!\nA kiadási évnek -10000 és 2023 között kell hogy legyen!";
+    }
+    public class InvalidEncException : Exception
+    {
+        public override string Message => $"Nem megfelelő Enciklopédia adat formátum!\ntrue/false";
+    }
+    public class InvalidEbookFormatException : Exception
+    {
+        public override string Message => $"Nem megfelelő Ebook adat formátum!\ni/n";
+
     }
 }
